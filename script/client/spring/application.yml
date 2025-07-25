@@ -1,15 +1,15 @@
 seata:
   enabled: true
-  application-id: applicationName
+  application-id: ${spring.application.name}
   tx-service-group: default_tx_group
   access-key: aliyunAccessKey
   secret-key: aliyunSecretKey
   enable-auto-data-source-proxy: true
   data-source-proxy-mode: AT
   use-jdk-proxy: false
-  scan-packages: firstPackage,secondPackage
-  excludes-for-scanning: firstBeanNameForExclude,secondBeanNameForExclude
-  excludes-for-auto-proxying: firstClassNameForExclude,secondClassNameForExclude
+  scan-packages:
+  excludes-for-scanning:
+  excludes-for-auto-proxying:
   client:
     rm:
       async-commit-buffer-limit: 10000
@@ -76,79 +76,31 @@ seata:
     rpc-rm-request-timeout: 30000
     rpc-tm-request-timeout: 30000
   config:
-    type: file
-    consul:
-      server-addr: 127.0.0.1:8500
-    apollo:
-      apollo-meta: http://192.168.1.204:8801
-      app-id: seata-server
-      namespace: application
-      apollo-accesskey-secret: ""
-    etcd3:
-      server-addr: http://localhost:2379
+    type: nacos
     nacos:
-      namespace: ""
-      server-addr: 127.0.0.1:8848
-      group: SEATA_GROUP
-      username: ""
-      password: ""
+      namespace: ky2-majh
+      server-addr: 192.168.22.105:8848
+      group: dev
+      username: nacos
+      password: WQn86w6RF8KrzEZ7
       ##if use MSE Nacos with auth, mutex with username/password attribute
       #access-key: ""
       #secret-key: ""
-      data-id: seata.properties
-    zk:
-      server-addr: 127.0.0.1:2181
-      session-timeout: 6000
-      connect-timeout: 2000
-      username: ""
-      password: ""
-      node-path: /seata/seata.properties
-    custom:
-      name: ""
+      data-id: seataServer.properties
   registry:
-    type: file
-    file:
-      name: file.conf
-    consul:
-      server-addr: 127.0.0.1:8500
-      acl-token: ""
-    etcd3:
-      server-addr: http://localhost:2379
-    eureka:
-      weight: 1
-      service-url: http://localhost:8761/eureka
+    type: nacos
     nacos:
       application: seata-server
-      server-addr: 127.0.0.1:8848
-      group : "SEATA_GROUP"
-      namespace: ""
-      username: ""
-      password: ""
+      server-addr: 192.168.22.105:8848
+      group : dev
+      namespace: ky2-majh
+      username: nacos
+      password: WQn86w6RF8KrzEZ7
       ##if use MSE Nacos with auth, mutex with username/password attribute
       #access-key: ""
       #secret-key: ""
       ##if use Nacos naming meta-data for SLB service registry, specify nacos address pattern rules here
       #slbPattern = ""
-    redis:
-      server-addr: localhost:6379
-      db: 0
-      password: ""
-      timeout: 0
-    sofa:
-      server-addr: 127.0.0.1:9603
-      region: DEFAULT_ZONE
-      datacenter: DefaultDataCenter
-      group: SEATA_GROUP
-      address-wait-time: 3000
-      application: default
-    zk:
-      server-addr: 127.0.0.1:2181
-      session-timeout: 6000
-      connect-timeout: 2000
-      username: ""
-      password: ""
-    custom:
-      name: ""
   log:
     exception-rate: 100
   tcc:
